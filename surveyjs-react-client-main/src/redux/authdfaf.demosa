@@ -1,0 +1,136 @@
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+// import api from '../utils/api';
+import axios from 'axios';
+import api from '../utils/api';
+import { status } from 'msw/lib/types/context';
+import { stat } from 'fs';
+
+interface auth {
+    token: string | null,
+    isAuthenticated: boolean,
+    user: null | { name: string; email: string },
+    isRegistered: boolean,
+    registerStatus: string
+    // errorMessage: string | null
+}
+
+// interface ErrorResponse {
+//     response: {
+//         data: {
+//             errors: Array<{
+//                 msg: string;
+//             }>
+//         }
+//     }
+// }
+
+const initialState: auth = {
+    token: localStorage.getItem('token'),
+    isAuthenticated: false,
+    user: null,
+    isRegistered: false,
+    registerStatus: 'idle'
+    // errorMessage: null
+};
+
+
+const authSlice = createSlice({
+    name: 'auth',
+    initialState,
+    reducers: {
+    },
+    extraReducers(builder) {
+        builder
+            .addCase(loadUser.fulfilled, (state, action) => {
+                state.user = action.payload
+            })
+            .addCase(register.pending, (state) => {
+                state.registerStatus = 'loading'
+                // state.errorMessage = null
+            })
+            .addCase(register.fulfilled, (state, action) => {
+                state.isAuthenticated = true
+                state.isRegistered = true
+                state.registerStatus = 'succeeded'
+                state.token = action.payload
+            })
+            .addCase(register.rejected, (state, action) => {
+                // state.errorMessage = action.payload
+                state.registerStatus = 'failed'
+            })
+            // .addCase(logIn.rejected, (state, action) => {
+            //     state.isAuthenticated = false
+            //     state.isRegistered = false
+            //     state.token = null
+            //     state.registerStatus = 'failed'
+            // })
+            // .addCase(logIn.fulfilled, (state, action) => {
+            //     // state.token = action.payload
+            //     state.isAuthenticated = true
+            //     state.isRegistered = true
+            //     state.registerStatus = 'succeeded'
+            // })
+            // .addCase(logOut.fulfilled, (state) => {
+            //     state.isAuthenticated = false
+            //     state.token = null
+            //     state.user = null
+            // })
+    }
+});
+
+export const loadUser = createAsyncThunk('auth/loadUser', async () => {
+    console.log('koko')
+    // const response = await axios.get('/api/auth')
+    const response = await api.get('/auth');
+
+    // const formData:{name: string, email: string, password: string} = {
+    //     name: 'kakakaaaaa',
+    //     email: 'jiji@aga.com',
+    //     password: 'edcvfrtg'
+    // }
+    // const res = await api.post('/users', formData);
+    console.log(response)
+    return response.data
+})
+
+export const register = createAsyncThunk('auth/register', async (formData: { name: string, email: string, password: string }) => {
+    // const formData:{name: string, email: string, password: string} = {
+    //     name: 'kakakaaaaa',
+    //     email: 'jiji@aga.com',
+    //     password: 'edcvfrtg'
+    // }
+    const res = await api.post('/users', formData);
+    return res.data
+})
+
+export const logIn = createAsyncThunk('auth/login', async (params: { email: string, password: string }) => {
+    await api.post('/auth', params)
+        .then(res => {console.log('res=====================>>>>>>>>>', res.data)})
+        .catch(err => {console.log('error>>>>>', err)})
+    
+    // try {
+    //     const response = await api.post('/auth', params)
+    //     console.log('koki', response)
+
+    //     return response.data
+    //     // dispatch(loadUser());
+    // } catch (err: any) {
+    //     console.log('err')
+    //     const errors = err.response.data.errors;
+
+    //     if (errors) {
+    //         errors.forEach((error: string) => console.log('error:', error));
+    //     }
+
+
+    // }
+})
+
+// export const setAlert = createAsyncThunk('setAlert',async () => {
+
+// })
+
+export const logOut = createAsyncThunk('auth/logout', () => { })
+
+// export const { login, logout } = authSlice.actions;
+export default authSlice.reducer;

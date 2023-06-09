@@ -1,0 +1,45 @@
+{
+    "name": "devconnector",
+    "version": "1.0.0",
+    "description": "Simple social networks for developers",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server",
+        "deve": "nodemon server",
+        "dev:fe": "npm start --prefix client",
+        "dev": "concurrently \"npm run dev:be\" \"npm run dev:fe\"",
+        "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm i -- prefix client && npm run build --prefix client"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/andreyrozumnyi/devconnector.git"
+    },
+    "keywords": [
+        "MERN"
+    ],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/andreyrozumnyi/devconnector/issues"
+    },
+    "homepage": "https://github.com/andreyrozumnyi/devconnector#readme",
+    "dependencies": {
+        "bcryptjs": "2.4.3",
+        "config": "3.2.4",
+        "cookie-parser": "^1.4.6",
+        "cors": "^2.8.5",
+        "express": "4.17.1",
+        "express-async-handler": "^1.2.0",
+        "express-validator": "6.3.0",
+        "gravatar": "1.8.0",
+        "jsonwebtoken": "8.5.1",
+        "mongoose": "5.7.12",
+        "request": "2.88.0"
+    },
+    "devDependencies": {
+        "concurrently": "5.0.0",
+        "eslint": "6.7.1",
+        "eslint-plugin-react-hooks": "2.3.0",
+        "nodemon": "2.0.1"
+    }
+}

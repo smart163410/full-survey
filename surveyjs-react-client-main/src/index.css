@@ -1,0 +1,42 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Set direction to Right-to-Left */
+/* .sv_qstn {
+  direction: rtl;
+} */
+/* Flip answer options */
+/* .sv_q_checkbox label:before, 
+.sv_q_radiogroup label:before, 
+.sv_q_checkbox material-icons,
+.sv_q_radiogroup material-icons  {
+  right: -1em;
+  left: auto !important;
+}
+.sv_q_checkbox label, 
+.sv_q_radiogroup label { 
+  padding-right: 20px;
+  padding-left: 0; 
+} */
+/* Set text-align to right */
+/* .sv_q_title, 
+.sv_q_header {
+  text-align: right;
+}
+.sv_qstn span.helpText {
+  margin-right: 0;
+  margin-left: 20px;
+  width: auto;
+  float: right;
+} */
